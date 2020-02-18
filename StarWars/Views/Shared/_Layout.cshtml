@@ -1,0 +1,34 @@
+﻿<html>
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="~/Content/Layout.css" />
+    <title>Star Wars</title>
+</head>
+<body>
+    <div id="first"></div>
+    
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="https://www.starwars.com/"><img src="~/img/animated-star-wars-image-0052.gif" /> </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile_nav" aria-controls="mobile_nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mobile_nav">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Home")">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("List","Home")">Calculate</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

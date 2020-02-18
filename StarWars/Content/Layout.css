@@ -1,0 +1,109 @@
+﻿body, html {
+    height: 100%;
+    margin: 0;
+}
+
+/* ---- reset ---- */
+
+body {
+    margin: 0;
+    background-color: #000000;
+}
+
+canvas {
+    display: block;
+    vertical-align: bottom;
+}
+
+.navbar {
+    background: #ffffff00;
+    padding-top: 0;
+    padding-bottom: 0;
+    position:inherit;
+}
+
+.navbar-light .navbar-brand {
+    color: #000000;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    padding-top: 22px;
+    padding-bottom: 22px;
+    transition: 0.3s;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-size: 14px;
+    color: cadetblue;
+}
+
+    .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+        transition: 0.3s;
+    }
+
+.dropdown-item:focus, .dropdown-item:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #1ebdc2 !important;
+}
+
+.dropdown-item {
+    color: #3c3c3c;
+    font-size: 14px;
+}
+
+    .dropdown-item.active, .dropdown-item:active {
+        color: #fff;
+        text-decoration: none;
+        background-color: #2196F3;
+    }
+
+.navbar-toggler {
+    outline: none !important;
+}
+
+.navbar-tog {
+    color: #1ebdc2;
+}
+
+.megamenu-li {
+    position: static;
+}
+
+.megamenu {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    padding: 15px;
+}
+
+    .megamenu h6 {
+        margin-left: 21px;
+    }
+
+    .megamenu i {
+        width: 20px;
+    }
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: darkblue; 
+}
+
+body::after {
+    content: "";
+    background-image: url('/img/darthvader4.png');
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    background-repeat: no-repeat;
+}

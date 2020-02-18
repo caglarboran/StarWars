@@ -1,0 +1,141 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <title>Startship Form</title>
+    <link href="~/Content/form.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <form id="contact">
+            <h3><i class="glyphicon glyphicon-search"></i></h3>
+            <fieldset>
+                <input placeholder="Distance" id="txtDistance" type="number" tabindex="1" min="0" required autofocus>
+            </fieldset>
+            <fieldset>
+                <button name="button" type="button" id="contact-submit" onclick="return GetData()"> Submit</button>
+            </fieldset>
+        </form>
+    </div>
+    <table id="results"></table>
+    <br />
+</body>
+</html>
+
+<script type="text/javascript">
+
+    var totalData = [];
+    let count = 1, pageCount = 0;
+
+    $(document).ready(function () {
+        PageCount();
+    });
+
+    /////////////////////////////////////////////////////////////////////////
+
+    function GetData() {
+
+        if ($('#txtDistance').val() === '') {
+            alert("It can not be empty!!");
+            return false;
+        }
+
+        var valueMGLT = $('#txtDistance').val();
+        $('#results').empty();
+
+        $.ajax({
+            url: 'https://swapi.co/api/starships/?page=' + count,
+            dataType: "json",
+            type: "get",
+            success: function (data) {
+
+                let tr;
+                let consumables, consumablesSplit, strTime = 0, hours = 0, days = 0, stops = 0, mglt = 0, number = 0;
+
+                if (count <= pageCount) {
+                    totalData.push(data);
+                    if (count === pageCount) {
+
+                        for (var i = 0; i < totalData.length; i++) {
+
+                            for (var j = 0; j < totalData[i].results.length; j++) {
+
+                                if (totalData[i].results[j].MGLT != "unknown") {
+                                    mglt = totalData[i].results[j].MGLT;
+                                }
+                                consumables = totalData[i].results[j].consumables;
+                                consumablesSplit = consumables.split(" ");
+
+                                if (consumablesSplit.length == 2 && mglt != 0) {
+                                    number = parseInt(consumablesSplit[0]);
+                                    strTime = consumablesSplit[1];
+                                    consumablesDays = getDays(number, strTime);
+                                    hours = parseInt(valueMGLT) / mglt;
+                                    days = hours / 24;
+                                    stops = parseInt(days / consumablesDays);
+                                }
+
+                                tr = tr + "<tr>";
+                                tr = tr + "<td>" + totalData[i].results[j].name + "</td>";
+                                tr = tr + "<td>" + (totalData[i].results[j].MGLT === "unknown" ? 0 : totalData[i].results[j].MGLT) + "</td>";
+                                tr = tr + "<td>" + stops + "</td>";
+                                tr = tr + "</tr>";
+                            }
+                        }
+
+                        tr = "<tr><th>Ship Name</th><th>MGLT</th><th>Stops</th></tr>" + tr;
+                        $('#results').append(tr);
+                        return true;
+                    }
+                    count++;
+                    GetData();
+                }
+                else {
+                    console.log(error);
+                    return false;
+                }
+            },
+            error: function (err) {
+                console.log(error);
+            }
+        });
+    }
+
+    /////////////////////////////////////////////////////////////////////////
+
+    function PageCount() {
+
+        $.ajax({
+            url: 'https://swapi.co/api/starships/?page=' + count,
+            dataType: "json",
+            type: "get",
+            success: function (data) {
+                let totalDataCount = data.count;
+                let firstPageCount = data.results.length;
+                pageCount = Math.ceil(totalDataCount / firstPageCount);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    /////////////////////////////////////////////////////////////////////////
+
+    function getDays(number, strtime) {
+        var str = 0;
+        var values = [['years', 365], ['month', 30], ['week', 7], ['day', 1], ['year', 365], ['months', 30], ['weeks', 7], ['days', 1]];
+        for (var i = 0; i < values.length; i++) {
+            if (values[i][0] == strtime) {
+                str = values[i][1] * number;
+                return str;
+            }
+        }
+        return -1;
+    }
+
+</script>
+
+
